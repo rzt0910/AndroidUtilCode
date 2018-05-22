@@ -1,8 +1,8 @@
 package com.blankj.androidutilcode.feature.core.fragment;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.transition.ChangeBounds;
 import android.transition.ChangeImageTransform;
 import android.transition.ChangeTransform;
@@ -14,10 +14,10 @@ import android.util.AttributeSet;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 17/02/21
- *     desc  :
+ *     desc  : demo about FragmentUtils
  * </pre>
  */
-@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 public class DetailTransition extends TransitionSet {
     public DetailTransition() {
         init();

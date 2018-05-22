@@ -6,6 +6,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.ColorInt;
@@ -13,12 +14,12 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.widget.TextViewCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.ref.WeakReference;
 
 /**
  * <pre>
@@ -33,13 +34,14 @@ public final class ToastUtils {
     private static final int     COLOR_DEFAULT = 0xFEFFFFFF;
     private static final Handler HANDLER       = new Handler(Looper.getMainLooper());
 
-    private static Toast sToast;
-    private static int sGravity    = -1;
-    private static int sXOffset    = -1;
-    private static int sYOffset    = -1;
-    private static int sBgColor    = COLOR_DEFAULT;
-    private static int sBgResource = -1;
-    private static int sMsgColor   = COLOR_DEFAULT;
+    private static WeakReference<Toast> sWeakToast;
+    private static int sGravity     = -1;
+    private static int sXOffset     = -1;
+    private static int sYOffset     = -1;
+    private static int sBgColor     = COLOR_DEFAULT;
+    private static int sBgResource  = -1;
+    private static int sMsgColor    = COLOR_DEFAULT;
+    private static int sMsgTextSize = -1;
 
     private ToastUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -83,6 +85,15 @@ public final class ToastUtils {
      */
     public static void setMsgColor(@ColorInt final int msgColor) {
         sMsgColor = msgColor;
+    }
+
+    /**
+     * Set the text size of message.
+     *
+     * @param textSize The text size of message.
+     */
+    public static void setMsgTextSize(final int textSize) {
+        sMsgTextSize = textSize;
     }
 
     /**
@@ -179,6 +190,8 @@ public final class ToastUtils {
 
     /**
      * Show custom toast for a short period of time.
+     *
+     * @param layoutId ID for an XML layout resource to load.
      */
     public static View showCustomShort(@LayoutRes final int layoutId) {
         final View view = getView(layoutId);
@@ -188,6 +201,8 @@ public final class ToastUtils {
 
     /**
      * Show custom toast for a long period of time.
+     *
+     * @param layoutId ID for an XML layout resource to load.
      */
     public static View showCustomLong(@LayoutRes final int layoutId) {
         final View view = getView(layoutId);
@@ -199,9 +214,10 @@ public final class ToastUtils {
      * Cancel the toast.
      */
     public static void cancel() {
-        if (sToast != null) {
-            sToast.cancel();
-            sToast = null;
+        final Toast toast;
+        if (sWeakToast != null && (toast = sWeakToast.get()) != null) {
+            toast.cancel();
+            sWeakToast = null;
         }
     }
 
@@ -222,21 +238,20 @@ public final class ToastUtils {
             @Override
             public void run() {
                 cancel();
-                sToast = Toast.makeText(Utils.getTopActivityOrApp(), text, duration);
-                final TextView tvMessage = sToast.getView().findViewById(android.R.id.message);
-                int msgColor = tvMessage.getCurrentTextColor();
-                //it solve the font of toast
-                TextViewCompat.setTextAppearance(tvMessage, android.R.style.TextAppearance);
+                final Toast toast = Toast.makeText(Utils.getTopActivityOrApp(), text, duration);
+                sWeakToast = new WeakReference<>(toast);
+                final TextView tvMessage = toast.getView().findViewById(android.R.id.message);
                 if (sMsgColor != COLOR_DEFAULT) {
                     tvMessage.setTextColor(sMsgColor);
-                } else {
-                    tvMessage.setTextColor(msgColor);
+                }
+                if (sMsgTextSize != -1) {
+                    tvMessage.setTextSize(sMsgTextSize);
                 }
                 if (sGravity != -1 || sXOffset != -1 || sYOffset != -1) {
-                    sToast.setGravity(sGravity, sXOffset, sYOffset);
+                    toast.setGravity(sGravity, sXOffset, sYOffset);
                 }
-                setBg(tvMessage);
-                sToast.show();
+                setBg(toast, tvMessage);
+                toast.show();
             }
         });
     }
@@ -246,20 +261,22 @@ public final class ToastUtils {
             @Override
             public void run() {
                 cancel();
-                sToast = new Toast(Utils.getTopActivityOrApp());
-                sToast.setView(view);
-                sToast.setDuration(duration);
+                final Toast toast = new Toast(Utils.getTopActivityOrApp());
+                sWeakToast = new WeakReference<>(toast);
+
+                toast.setView(view);
+                toast.setDuration(duration);
                 if (sGravity != -1 || sXOffset != -1 || sYOffset != -1) {
-                    sToast.setGravity(sGravity, sXOffset, sYOffset);
+                    toast.setGravity(sGravity, sXOffset, sYOffset);
                 }
-                setBg();
-                sToast.show();
+                setBg(toast);
+                toast.show();
             }
         });
     }
 
-    private static void setBg() {
-        View toastView = sToast.getView();
+    private static void setBg(final Toast toast) {
+        final View toastView = toast.getView();
         if (sBgResource != -1) {
             toastView.setBackgroundResource(sBgResource);
         } else if (sBgColor != COLOR_DEFAULT) {
@@ -269,13 +286,17 @@ public final class ToastUtils {
                         new PorterDuffColorFilter(sBgColor, PorterDuff.Mode.SRC_IN)
                 );
             } else {
-                ViewCompat.setBackground(toastView, new ColorDrawable(sBgColor));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    toastView.setBackground(new ColorDrawable(sBgColor));
+                } else {
+                    toastView.setBackgroundDrawable(new ColorDrawable(sBgColor));
+                }
             }
         }
     }
 
-    private static void setBg(final TextView tvMsg) {
-        View toastView = sToast.getView();
+    private static void setBg(final Toast toast, final TextView tvMsg) {
+        View toastView = toast.getView();
         if (sBgResource != -1) {
             toastView.setBackgroundResource(sBgResource);
             tvMsg.setBackgroundColor(Color.TRANSPARENT);

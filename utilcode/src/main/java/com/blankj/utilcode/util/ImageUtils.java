@@ -1,6 +1,5 @@
 package com.blankj.utilcode.util;
 
-import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -33,6 +32,7 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.FloatRange;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
@@ -1167,7 +1167,7 @@ public final class ImageUtils {
      * @param radius The radius(0...25).
      * @return the blur bitmap
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap renderScriptBlur(final Bitmap src,
                                           @FloatRange(
                                                   from = 0, to = 25, fromInclusive = false
@@ -1183,7 +1183,7 @@ public final class ImageUtils {
      * @param recycle True to recycle the source of bitmap, false otherwise.
      * @return the blur bitmap
      */
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap renderScriptBlur(final Bitmap src,
                                           @FloatRange(
                                                   from = 0, to = 25, fromInclusive = false
@@ -1493,7 +1493,13 @@ public final class ImageUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            CloseUtils.closeIO(os);
+            try {
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return ret;
     }
@@ -1538,7 +1544,7 @@ public final class ImageUtils {
      * @return the type of image
      */
     public static String getImageType(final File file) {
-        if (file == null) return null;
+        if (file == null) return "";
         InputStream is = null;
         try {
             is = new FileInputStream(file);
@@ -1549,7 +1555,13 @@ public final class ImageUtils {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            CloseUtils.closeIO(is);
+            try {
+                if (is != null) {
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         return getFileExtension(file.getAbsolutePath()).toUpperCase();
     }
@@ -1904,7 +1916,11 @@ public final class ImageUtils {
             e.printStackTrace();
             return null;
         } finally {
-            CloseUtils.closeIO(is);
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

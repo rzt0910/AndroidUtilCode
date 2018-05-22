@@ -12,7 +12,7 @@ import android.view.View;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/10/24
- *     desc  : Activity 基类
+ *     desc  : base about activity
  * </pre>
  */
 public abstract class BaseActivity extends AppCompatActivity
@@ -31,9 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         mActivity = this;
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            initData(bundle);
-        }
+        initData(bundle);
         setBaseView(bindLayout());
         initView(savedInstanceState, mContentView);
         doBusiness();

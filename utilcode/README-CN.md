@@ -2,13 +2,13 @@
 
 Gradle:
 ```groovy
-compile 'com.blankj:utilcode:1.13.10'
+implementation 'com.blankj:utilcode:1.15.1'
 ```
 
 
 ## How to use
 
-```
+```java
 // init it in the function of onCreate in ur Application
 Utils.init(application);
 ```
@@ -16,11 +16,7 @@ Utils.init(application);
 
 ## Proguard
 
-```
--keep class com.blankj.utilcode.** { *; }
--keepclassmembers class com.blankj.utilcode.** { *; }
--dontwarn com.blankj.utilcode.**
-```
+U needn't do anything, because I add `consumerProguardFiles 'proguard-rules.pro'` in build.gradle.
 
 
 ## APIs
@@ -29,6 +25,7 @@ Utils.init(application);
 ```
 isActivityExists               : 判断 Activity 是否存在
 startActivity                  : 启动 Activity
+startActivityForResult         : 启动 Activity 为返回结果
 startActivities                : 启动多个 Activity
 startHomeActivity              : 回到桌面
 getActivityList                : 获取 Activity 栈链表
@@ -54,6 +51,7 @@ isAppDebug              : 判断 App 是否是 Debug 版本
 isAppSystem             : 判断 App 是否是系统应用
 isAppForeground         : 判断 App 是否处于前台
 launchApp               : 打开 App
+relaunchApp             : 重启 App
 launchAppDetailsSettings: 打开 App 具体设置
 exitApp                 : 关闭应用
 getAppIcon              : 获取 App 图标
@@ -85,25 +83,27 @@ setNotificationBarVisibility         : 设置通知栏是否可见
 getNavBarHeight                      : 获取导航栏高度
 setNavBarVisibility                  : 设置导航栏是否可见
 setNavBarImmersive                   : 设置导航栏沉浸式
+setNavBarColor                       : 设置导航栏颜色
+getNavBarColor                       : 获取导航栏颜色
 isNavBarVisible                      : 判断导航栏是否可见
 ```
 
 * ### 缓存相关 -> [CacheUtils.java][cache.java] -> [Test][cache.test]
 ```
-getInstance    : 获取缓存实例
-put            : 缓存中写入数据
-getBytes       : 缓存中读取字节数组
-getString      : 缓存中读取 String
-getJSONObject  : 缓存中读取 JSONObject
-getJSONArray   : 缓存中读取 JSONArray
-getBitmap      : 缓存中读取 Bitmap
-getDrawable    : 缓存中读取 Drawable
-getParcelable  : 缓存中读取 Parcelable
-getSerializable: 缓存中读取 Serializable
-getCacheSize   : 获取缓存大小
-getCacheCount  : 获取缓存个数
-remove         : 根据键值移除缓存
-clear          : 清除所有缓存
+getInstance             : 获取缓存实例
+Instance.put            : 缓存中写入数据
+Instance.getBytes       : 缓存中读取字节数组
+Instance.getString      : 缓存中读取 String
+Instance.getJSONObject  : 缓存中读取 JSONObject
+Instance.getJSONArray   : 缓存中读取 JSONArray
+Instance.getBitmap      : 缓存中读取 Bitmap
+Instance.getDrawable    : 缓存中读取 Drawable
+Instance.getParcelable  : 缓存中读取 Parcelable
+Instance.getSerializable: 缓存中读取 Serializable
+Instance.getCacheSize   : 获取缓存大小
+Instance.getCacheCount  : 获取缓存个数
+Instance.remove         : 根据键值移除缓存
+Instance.clear          : 清除所有缓存
 ```
 
 * ### 清除相关 -> [CleanUtils.java][clean.java] -> [Demo][clean.demo]
@@ -159,6 +159,7 @@ getAndroidID     : 获取设备 AndroidID
 getMacAddress    : 获取设备 MAC 地址
 getManufacturer  : 获取设备厂商
 getModel         : 获取设备型号
+getABIs          : 获取设备 ABIs
 shutdown         : 关机
 reboot           : 重启
 reboot2Recovery  : 重启到 recovery
@@ -198,6 +199,8 @@ encrypt3DES, encrypt3DES2HexString, encrypt3DES2Base64: 3DES 加密
 decrypt3DES, decryptHexString3DES, decryptBase64_3DES : 3DES 解密
 encryptAES, encryptAES2HexString, encryptAES2Base64   : AES 加密
 decryptAES, decryptHexStringAES, decryptBase64AES     : AES 解密
+encryptRSA, encryptRSA2HexString, encryptRSA2Base64   : RSA 加密
+decryptRSA, decryptHexStringRSA, decryptBase64RSA     : RSA 解密
 ```
 
 * ### 文件相关 -> [FileIOUtils.java][fileio.java] -> [Test][fileio.test]
@@ -326,44 +329,48 @@ getCaptureIntent                 : 获取拍照的意图
 
 * ### 键盘相关 -> [KeyboardUtils.java][keyboard.java] -> [Demo][keyboard.demo]
 ```
-showSoftInput                   : 动态显示软键盘
-hideSoftInput                   : 动态隐藏软键盘
-toggleSoftInput                 : 切换键盘显示与否状态
-isSoftInputVisible              : 判断软键盘是否可见
-registerSoftInputChangedListener: 注册软键盘改变监听器
-fixSoftInputLeaks               : 修复软键盘内存泄漏
-clickBlankArea2HideSoftInput    : 点击屏幕空白区域隐藏软键盘
+showSoftInput                     : 动态显示软键盘
+hideSoftInput                     : 动态隐藏软键盘
+toggleSoftInput                   : 切换键盘显示与否状态
+isSoftInputVisible                : 判断软键盘是否可见
+registerSoftInputChangedListener  : 注册软键盘改变监听器
+unregisterSoftInputChangedListener: 注销软键盘改变监听器
+fixSoftInputLeaks                 : 修复软键盘内存泄漏
+clickBlankArea2HideSoftInput      : 点击屏幕空白区域隐藏软键盘
 ```
 
 * ### 日志相关 -> [LogUtils.java][log.java] -> [Demo][log.demo]
 ```
-getConfig               : 获取 log 配置
-Config.setLogSwitch     : 设置 log 总开关
-Config.setConsoleSwitch : 设置 log 控制台开关
-Config.setGlobalTag     : 设置 log 全局 tag
-Config.setLogHeadSwitch : 设置 log 头部信息开关
-Config.setLog2FileSwitch: 设置 log 文件开关
-Config.setDir           : 设置 log 文件存储目录
-Config.setFilePrefix    : 设置 log 文件前缀
-Config.setBorderSwitch  : 设置 log 边框开关
-Config.setConsoleFilter : 设置 log 控制台过滤器
-Config.setFileFilter    : 设置 log 文件过滤器
-Config.setStackDeep     : 设置 log 栈深度
-v                       : tag 为类名的 Verbose 日志
-vTag                    : 自定义 tag 的 Verbose 日志
-d                       : tag 为类名的 Debug 日志
-dTag                    : 自定义 tag 的 Debug 日志
-i                       : tag 为类名的 Info 日志
-iTag                    : 自定义 tag 的 Info 日志
-w                       : tag 为类名的 Warn 日志
-wTag                    : 自定义 tag 的 Warn 日志
-e                       : tag 为类名的 Error 日志
-eTag                    : 自定义 tag 的 Error 日志
-a                       : tag 为类名的 Assert 日志
-aTag                    : 自定义 tag 的 Assert 日志
-file                    : log 到文件
-json                    : log 字符串之 json
-xml                     : log 字符串之 xml
+getConfig                : 获取 log 配置
+Config.setLogSwitch      : 设置 log 总开关
+Config.setConsoleSwitch  : 设置 log 控制台开关
+Config.setGlobalTag      : 设置 log 全局 tag
+Config.setLogHeadSwitch  : 设置 log 头部信息开关
+Config.setLog2FileSwitch : 设置 log 文件开关
+Config.setDir            : 设置 log 文件存储目录
+Config.setFilePrefix     : 设置 log 文件前缀
+Config.setBorderSwitch   : 设置 log 边框开关
+Config.setSingleTagSwitch: 设置 log 单一 tag 开关（为美化 AS 3.1 的 Logcat）
+Config.setConsoleFilter  : 设置 log 控制台过滤器
+Config.setFileFilter     : 设置 log 文件过滤器
+Config.setStackDeep      : 设置 log 栈深度
+Config.setStackOffset    : 设置 log 栈偏移
+log                      : 自定义 tag 的 type 日志
+v                        : tag 为类名的 Verbose 日志
+vTag                     : 自定义 tag 的 Verbose 日志
+d                        : tag 为类名的 Debug 日志
+dTag                     : 自定义 tag 的 Debug 日志
+i                        : tag 为类名的 Info 日志
+iTag                     : 自定义 tag 的 Info 日志
+w                        : tag 为类名的 Warn 日志
+wTag                     : 自定义 tag 的 Warn 日志
+e                        : tag 为类名的 Error 日志
+eTag                     : 自定义 tag 的 Error 日志
+a                        : tag 为类名的 Assert 日志
+aTag                     : 自定义 tag 的 Assert 日志
+file                     : log 到文件
+json                     : log 字符串之 json
+xml                      : log 字符串之 xml
 ```
 
 * ### 网络相关 -> [NetworkUtils.java][network.java] -> [Demo][network.demo]
@@ -430,6 +437,8 @@ sendSmsSilent      : 发送短信
 getForegroundProcessName  : 获取前台线程包名
 killAllBackgroundProcesses: 杀死所有的后台服务进程
 killBackgroundProcesses   : 杀死后台服务进程
+isMainProcess             : 判断是否运行在主进程
+getCurrentProcessName     : 获取当前进程名称
 ```
 
 * ### 反射相关 -> [ReflectUtils.java][reflect.java] -> [Test][reflect.test]
@@ -461,6 +470,16 @@ getReplaceFirst: 替换正则匹配的第一部分
 getReplaceAll  : 替换所有正则匹配的部分
 ```
 
+* ### 资源相关 -> [ResourceUtils.java][resource.java] -> [Demo][resource.demo]
+```
+copyFileFromAssets: 从 assets 中拷贝文件
+readAssets2String : 从 assets 中读取字符串
+readAssets2List   : 从 assets 中按行读取字符串
+copyFileFromRaw   : 从 raw 中拷贝文件
+readRaw2String    : 从 raw 中读取字符串
+readRaw2List      : 从 raw 中按行读取字符串
+```
+
 * ### 屏幕相关 -> [ScreenUtils.java][screen.java] -> [Demo][screen.demo]
 ```
 getScreenWidth     : 获取屏幕的宽度（单位：px）
@@ -482,8 +501,10 @@ isTablet           : 判断是否是平板
 
 * ### SD 卡相关 -> [SDCardUtils.java][sdcard.java] -> [Demo][sdcard.demo]
 ```
-isSDCardEnable: 判断 SD 卡是否可用
-getSDCardPaths: 获取 SD 卡路径
+isSDCardEnableByEnvironment: 根据 Environment 判断 SD 卡是否可用
+getSDCardPathByEnvironment : 根据 Environment 获取 SD 卡路径
+isSDCardEnable             : 判断 SD 卡是否可用
+getSDCardPaths             : 获取 SD 卡路径
 ```
 
 * ### 服务相关 -> [ServiceUtils.java][service.java]
@@ -569,17 +590,17 @@ create            : 创建样式字符串
 
 * ### SP 相关 -> [SPUtils.java][sp.java] -> [Demo][sp.demo]
 ```
-getInstance: 获取 SP 实例
-put        : SP 中写入数据
-getString  : SP 中读取 String
-getInt     : SP 中读取 int
-getLong    : SP 中读取 long
-getFloat   : SP 中读取 float
-getBoolean : SP 中读取 boolean
-getAll     : SP 中获取所有键值对
-contains   : SP 中是否存在该 key
-remove     : SP 中移除该 key
-clear      : SP 中清除所有数据
+getInstance        : 获取 SP 实例
+Instance.put       : SP 中写入数据
+Instance.getString : SP 中读取 String
+Instance.getInt    : SP 中读取 int
+Instance.getLong   : SP 中读取 long
+Instance.getFloat  : SP 中读取 float
+Instance.getBoolean: SP 中读取 boolean
+Instance.getAll    : SP 中获取所有键值对
+Instance.contains  : SP 中是否存在该 key
+Instance.remove    : SP 中移除该 key
+Instance.clear     : SP 中清除所有数据
 ```
 
 * ### 字符串相关 -> [StringUtils.java][string.java] -> [Test][string.test]
@@ -624,9 +645,7 @@ isToday                 : 判断是否今天
 isLeapYear              : 判断是否闰年
 getChineseWeek          : 获取中式星期
 getUSWeek               : 获取美式式星期
-getWeekIndex            : 获取星期索引
-getWeekOfMonth          : 获取月份中的第几周
-getWeekOfYear           : 获取年份中的第几周
+getValueByCalendarField : 根据日历字段获取值
 getChineseZodiac        : 获取生肖
 getZodiac               : 获取星座
 ```
@@ -636,12 +655,18 @@ getZodiac               : 获取星座
 setGravity     : 设置吐司位置
 setBgColor     : 设置背景颜色
 setBgResource  : 设置背景资源
-setMessageColor: 设置消息颜色
+setMsgColor    : 设置消息颜色
+setMsgTextSize : 设置消息字体大小
 showShort      : 显示短时吐司
 showLong       : 显示长时吐司
 showCustomShort: 显示短时自定义吐司
 showCustomLong : 显示长时自定义吐司
 cancel         : 取消吐司显示
+```
+
+* ### URI 相关 -> [UriUtils.java][uri.java]
+```
+getUriForFile: 获取文件 URI
 ```
 
 * ### 压缩相关 -> [ZipUtils.java][zip.java] -> [Test][zip.test]
@@ -731,6 +756,9 @@ getComments       : 获取压缩文件中的注释链表
 [regex.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/RegexUtils.java
 [regex.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/RegexUtilsTest.java
 
+[resource.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ResourceUtils.java
+[resource.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/resource/ResourceActivity.java
+
 [screen.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ScreenUtils.java
 [screen.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/screen/ScreenActivity.java
 
@@ -760,6 +788,8 @@ getComments       : 获取压缩文件中的注释链表
 
 [toast.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ToastUtils.java
 [toast.demo]: https://github.com/Blankj/AndroidUtilCode/blob/master/app/src/main/java/com/blankj/androidutilcode/feature/core/toast/ToastActivity.java
+
+[uri.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/UriUtils.java
 
 [zip.java]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/main/java/com/blankj/utilcode/util/ZipUtils.java
 [zip.test]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/src/test/java/com/blankj/utilcode/util/ZipUtilsTest.java

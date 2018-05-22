@@ -2,6 +2,7 @@ package com.blankj.utilcode.util;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.support.annotation.NonNull;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -97,8 +99,10 @@ public final class Utils {
      * @param app application
      */
     public static void init(@NonNull final Application app) {
-        Utils.sApplication = app;
-        Utils.sApplication.registerActivityLifecycleCallbacks(mCallbacks);
+        if (sApplication == null) {
+            Utils.sApplication = app;
+            Utils.sApplication.registerActivityLifecycleCallbacks(mCallbacks);
+        }
     }
 
     /**
@@ -108,10 +112,29 @@ public final class Utils {
      */
     public static Application getApp() {
         if (sApplication != null) return sApplication;
+        try {
+            @SuppressLint("PrivateApi")
+            Class<?> activityThread = Class.forName("android.app.ActivityThread");
+            Object at = activityThread.getMethod("currentActivityThread").invoke(null);
+            Object app = activityThread.getMethod("getApplication").invoke(at);
+            if (app == null) {
+                throw new NullPointerException("u should init first");
+            }
+            init((Application) app);
+            return sApplication;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         throw new NullPointerException("u should init first");
     }
 
-    static void setTopActivity(final Activity activity) {
+    private static void setTopActivity(final Activity activity) {
         if (activity.getClass() == PermissionUtils.PermissionActivity.class) return;
         if (ACTIVITY_LIST.contains(activity)) {
             if (!ACTIVITY_LIST.getLast().equals(activity)) {
@@ -128,8 +151,26 @@ public final class Utils {
     }
 
     static Context getTopActivityOrApp() {
-        Activity topActivity = getTopActivity();
-        return topActivity == null ? Utils.getApp() : topActivity;
+        if (isAppForeground()) {
+            Activity topActivity = getTopActivity();
+            return topActivity == null ? Utils.getApp() : topActivity;
+        } else {
+            return Utils.getApp();
+        }
+    }
+
+    static boolean isAppForeground() {
+        ActivityManager am =
+                (ActivityManager) Utils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
+        if (am == null) return false;
+        List<ActivityManager.RunningAppProcessInfo> info = am.getRunningAppProcesses();
+        if (info == null || info.size() == 0) return false;
+        for (ActivityManager.RunningAppProcessInfo aInfo : info) {
+            if (aInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return aInfo.processName.equals(Utils.getApp().getPackageName());
+            }
+        }
+        return false;
     }
 
     static Activity getTopActivity() {

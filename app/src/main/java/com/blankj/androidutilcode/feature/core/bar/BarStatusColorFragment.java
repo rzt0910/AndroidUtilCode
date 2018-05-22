@@ -1,7 +1,7 @@
 package com.blankj.androidutilcode.feature.core.bar;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.SeekBar;
@@ -20,7 +20,7 @@ import java.util.Random;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2017/07/01
- *     desc  : Bar 工具类 Demo
+ *     desc  : demo about BarUtils
  * </pre>
  */
 public class BarStatusColorFragment extends BaseLazyFragment {
@@ -38,7 +38,7 @@ public class BarStatusColorFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
         mRandom = new Random();
         mColor = ContextCompat.getColor(UtilsApp.getInstance(), R.color.colorPrimary);
         mAlpha = 112;

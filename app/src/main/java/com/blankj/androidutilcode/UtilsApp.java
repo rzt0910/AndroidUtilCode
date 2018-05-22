@@ -1,13 +1,9 @@
 package com.blankj.androidutilcode;
 
 import android.annotation.SuppressLint;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 
 import com.blankj.androidutilcode.base.BaseApplication;
-import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.CrashUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.squareup.leakcanary.LeakCanary;
@@ -17,7 +13,7 @@ import com.squareup.leakcanary.LeakCanary;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/10/12
- *     desc  : 工具类测试 App
+ *     desc  : app about utils
  * </pre>
  */
 public class UtilsApp extends BaseApplication {
@@ -65,7 +61,8 @@ public class UtilsApp extends BaseApplication {
                 .setSingleTagSwitch(true)// 一条日志仅输出一条，默认开，为美化 AS 3.1 的 Logcat
                 .setConsoleFilter(LogUtils.V)// log 的控制台过滤器，和 logcat 过滤器同理，默认 Verbose
                 .setFileFilter(LogUtils.V)// log 文件过滤器，和 logcat 过滤器同理，默认 Verbose
-                .setStackDeep(1);// log 栈深度，默认为 1
+                .setStackDeep(1)// log 栈深度，默认为 1
+                .setStackOffset(0);// 设置栈偏移，比如二次封装的话就需要设置，默认为 0
         LogUtils.d(config.toString());
     }
 
@@ -75,22 +72,9 @@ public class UtilsApp extends BaseApplication {
             @Override
             public void onCrash(String crashInfo, Throwable e) {
                 LogUtils.e(crashInfo);
-                restartApp();
+                AppUtils.relaunchApp();
             }
         });
-    }
-
-    private void restartApp() {
-        Intent intent = new Intent();
-        intent.setClassName("com.blankj.androidutilcode", "com.blankj.androidutilcode.MainActivity");
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent restartIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        AlarmManager manager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        if (manager == null) return;
-        manager.set(AlarmManager.RTC, System.currentTimeMillis() + 1, restartIntent);
-        ActivityUtils.finishAllActivities();
-        android.os.Process.killProcess(android.os.Process.myPid());
-        System.exit(1);
     }
 }
 

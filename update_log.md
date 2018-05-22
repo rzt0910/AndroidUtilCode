@@ -1,3 +1,20 @@
+* 18/05/15 新增 MetaDataUtils 和 ActivityUtils#startActivityForResult，发布 1.15.1 版本
+* 18/05/08 新增 ResourceUtils，发布 1.15.0 版本
+* 18/05/07 修复 ZipUtils 漏洞，发布 1.14.4 版本
+* 18/05/03 修复 ToastUtils 默认字体大小问题，发布 1.14.3 版本
+* 18/05/02 修复 PermissionUtils 空异常，发布 1.14.2 版本
+* 18/04/28 新增 FlashlightUtils，发布 1.14.1 版本
+* 18/04/26 修复 KeyboardUtils 全屏 NO_LIMIT 的 bug
+* 18/04/25 修复多个空异常
+* 18/04/24 修复多 FileProvider 带来的问题，发布 1.14.0 版本
+* 18/04/23 新增 RSA 加解密，发布 1.13.16 版本
+* 18/04/22 新增 LogUtils 设置栈偏移
+* 18/04/21 新增 AppUtils#relaunchApp、DeviceUtils#getABIs，发布 1.13.15 版本
+* 18/04/20 新增 BarUtils#setNavBarColor、BarUtils#getNavBarColor
+* 18/04/19 新增 Process#isMainProcess、Process#getCurrentProcessName，发布 1.13.14 版本
+* 18/04/18 修复 LogUtils 头部空指针异常，SPUtils、CacheUtils 存储空值异常，发布 1.13.13 版本
+* 18/04/17 修复 ToastUtils 内存泄漏问题，感谢 [LambertCoding](https://github.com/LambertCoding)，发布 1.13.12 版本
+* 18/04/16 完善 AppUtils#installAppSilent 路径包含空格问题，发布 1.13.11 版本
 * 18/04/10 完善 OnCrashListener 回调崩溃信息，发布 1.13.10 版本
 * 18/04/09 修复静默安装重载错误，发布 1.13.9 版本
 * 18/04/08 修复获取栈顶 Activity 链表为空的异常，获取栈顶 Activity 放到 Utils 中，发布 1.13.8 版本
@@ -8,7 +25,7 @@
 * 18/03/20 修复 PermissionUtils 子进程的问题，发布 1.13.5 版本
 * 18/03/16 新增 gradle 插件来格式化 README
 * 18/03/14 修复 KeyboardUtils#getContentViewInvisibleHeight，发布 1.13.4 版本
-* 18/03/10 完善 Utils#installAppSilent 和 DeviceUtils#getMacAddress，发布 1.13.3 版本
+* 18/03/10 完善 AppUtils#installAppSilent 和 DeviceUtils#getMacAddress，发布 1.13.3 版本
 * 18/03/09 完善 ActivityUtils#getTopActivity
 * 18/03/08 新增反射获取栈顶 Activity 的方法，发布 1.13.2 版本
 * 18/03/07 修复 PermissionUtils 请求权限为 0 的 崩溃

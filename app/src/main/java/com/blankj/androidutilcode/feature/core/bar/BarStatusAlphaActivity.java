@@ -3,7 +3,7 @@ package com.blankj.androidutilcode.feature.core.bar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -17,7 +17,7 @@ import com.blankj.utilcode.util.BarUtils;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2017/05/27
- *     desc  : Bar 工具类 Demo
+ *     desc  : demo about BarUtils
  * </pre>
  */
 public class BarStatusAlphaActivity extends BaseActivity {
@@ -33,7 +33,7 @@ public class BarStatusAlphaActivity extends BaseActivity {
     }
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
         mAlpha = 112;
     }
 

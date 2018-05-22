@@ -30,7 +30,17 @@ public final class SPUtils {
      * @return the single {@link SPUtils} instance
      */
     public static SPUtils getInstance() {
-        return getInstance("");
+        return getInstance("", Context.MODE_PRIVATE);
+    }
+
+    /**
+     * Return the single {@link SPUtils} instance
+     *
+     * @param mode Operating mode.
+     * @return the single {@link SPUtils} instance
+     */
+    public static SPUtils getInstance(final int mode) {
+        return getInstance("", mode);
     }
 
     /**
@@ -40,10 +50,21 @@ public final class SPUtils {
      * @return the single {@link SPUtils} instance
      */
     public static SPUtils getInstance(String spName) {
+        return getInstance(spName, Context.MODE_PRIVATE);
+    }
+
+    /**
+     * Return the single {@link SPUtils} instance
+     *
+     * @param spName The name of sp.
+     * @param mode   Operating mode.
+     * @return the single {@link SPUtils} instance
+     */
+    public static SPUtils getInstance(String spName, final int mode) {
         if (isSpace(spName)) spName = "spUtils";
         SPUtils spUtils = SP_UTILS_MAP.get(spName);
         if (spUtils == null) {
-            spUtils = new SPUtils(spName);
+            spUtils = new SPUtils(spName, mode);
             SP_UTILS_MAP.put(spName, spUtils);
         }
         return spUtils;
@@ -53,13 +74,17 @@ public final class SPUtils {
         sp = Utils.getApp().getSharedPreferences(spName, Context.MODE_PRIVATE);
     }
 
+    private SPUtils(final String spName, final int mode) {
+        sp = Utils.getApp().getSharedPreferences(spName, mode);
+    }
+
     /**
      * Put the string value in sp.
      *
      * @param key   The key of sp.
      * @param value The value of sp.
      */
-    public void put(@NonNull final String key, @NonNull final String value) {
+    public void put(@NonNull final String key, final String value) {
         put(key, value, false);
     }
 
@@ -71,9 +96,7 @@ public final class SPUtils {
      * @param isCommit True to use {@link SharedPreferences.Editor#commit()},
      *                 false to use {@link SharedPreferences.Editor#apply()}
      */
-    public void put(@NonNull final String key,
-                    @NonNull final String value,
-                    final boolean isCommit) {
+    public void put(@NonNull final String key, final String value, final boolean isCommit) {
         if (isCommit) {
             sp.edit().putString(key, value).commit();
         } else {
@@ -98,7 +121,7 @@ public final class SPUtils {
      * @param defaultValue The default value if the sp doesn't exist.
      * @return the string value if sp exists or {@code defaultValue} otherwise
      */
-    public String getString(@NonNull final String key, @NonNull final String defaultValue) {
+    public String getString(@NonNull final String key, final String defaultValue) {
         return sp.getString(key, defaultValue);
     }
 
@@ -296,7 +319,7 @@ public final class SPUtils {
      * @param key   The key of sp.
      * @param value The value of sp.
      */
-    public void put(@NonNull final String key, @NonNull final Set<String> value) {
+    public void put(@NonNull final String key, final Set<String> value) {
         put(key, value, false);
     }
 
@@ -309,7 +332,7 @@ public final class SPUtils {
      *                 false to use {@link SharedPreferences.Editor#apply()}
      */
     public void put(@NonNull final String key,
-                    @NonNull final Set<String> value,
+                    final Set<String> value,
                     final boolean isCommit) {
         if (isCommit) {
             sp.edit().putStringSet(key, value).commit();
@@ -322,7 +345,8 @@ public final class SPUtils {
      * Return the set of string value in sp.
      *
      * @param key The key of sp.
-     * @return the set of string value if sp exists or {@code Collections.<String>emptySet()} otherwise
+     * @return the set of string value if sp exists
+     * or {@code Collections.<String>emptySet()} otherwise
      */
     public Set<String> getStringSet(@NonNull final String key) {
         return getStringSet(key, Collections.<String>emptySet());
@@ -336,7 +360,7 @@ public final class SPUtils {
      * @return the set of string value if sp exists or {@code defaultValue} otherwise
      */
     public Set<String> getStringSet(@NonNull final String key,
-                                    @NonNull final Set<String> defaultValue) {
+                                    final Set<String> defaultValue) {
         return sp.getStringSet(key, defaultValue);
     }
 

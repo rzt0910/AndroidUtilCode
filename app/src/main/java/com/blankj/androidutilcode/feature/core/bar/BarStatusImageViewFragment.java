@@ -1,7 +1,7 @@
 package com.blankj.androidutilcode.feature.core.bar;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -16,7 +16,7 @@ import com.blankj.utilcode.util.LogUtils;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2017/07/01
- *     desc  : Bar 工具类 Demo
+ *     desc  : demo about BarUtils
  * </pre>
  */
 public class BarStatusImageViewFragment extends BaseLazyFragment {
@@ -32,7 +32,7 @@ public class BarStatusImageViewFragment extends BaseLazyFragment {
     }
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
         mAlpha = 112;
     }
 

@@ -12,7 +12,7 @@ import android.graphics.Matrix;
 import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.Layout;
 import android.text.SpannableStringBuilder;
@@ -33,7 +33,7 @@ import com.blankj.utilcode.util.ToastUtils;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/09/27
- *     desc  : Span 工具类 Demo
+ *     desc  : demo about SpanUtils
  * </pre>
  */
 public class SpanActivity extends BaseBackActivity {
@@ -69,7 +69,7 @@ public class SpanActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -108,6 +108,7 @@ public class SpanActivity extends BaseBackActivity {
 
         initAnimSpan();
         startAnim();
+
 
         tvAboutSpan.setText(new SpanUtils()
                 .appendLine("SpanUtils").setBackgroundColor(Color.LTGRAY).setBold().setForegroundColor(Color.YELLOW).setAlign(Layout.Alignment.ALIGN_CENTER)

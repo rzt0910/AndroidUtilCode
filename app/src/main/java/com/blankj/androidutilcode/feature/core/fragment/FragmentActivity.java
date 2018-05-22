@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.view.MenuItem;
@@ -19,7 +20,7 @@ import com.blankj.utilcode.util.FragmentUtils;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 17/02/01
- *     desc  : Fragment 工具类 Demo
+ *     desc  : demo about FragmentUtils
  * </pre>
  */
 public class FragmentActivity extends BaseActivity {
@@ -40,7 +41,7 @@ public class FragmentActivity extends BaseActivity {
     }
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 

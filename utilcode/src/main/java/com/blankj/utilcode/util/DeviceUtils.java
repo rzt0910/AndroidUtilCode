@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.RequiresPermission;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.net.InetAddress;
@@ -75,10 +76,11 @@ public final class DeviceUtils {
      */
     @SuppressLint("HardwareIds")
     public static String getAndroidID() {
-        return Settings.Secure.getString(
+        String id = Settings.Secure.getString(
                 Utils.getApp().getContentResolver(),
                 Settings.Secure.ANDROID_ID
         );
+        return id == null ? "" : id;
     }
 
     /**
@@ -231,6 +233,23 @@ public final class DeviceUtils {
             model = "";
         }
         return model;
+    }
+
+    /**
+     * Return an ordered list of ABIs supported by this device. The most preferred ABI is the first
+     * element in the list.
+     *
+     * @return an ordered list of ABIs supported by this device
+     */
+    public static String[] getABIs() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return Build.SUPPORTED_ABIS;
+        } else {
+            if (!TextUtils.isEmpty(Build.CPU_ABI2)) {
+                return new String[]{Build.CPU_ABI, Build.CPU_ABI2};
+            }
+            return new String[]{Build.CPU_ABI};
+        }
     }
 
     /**

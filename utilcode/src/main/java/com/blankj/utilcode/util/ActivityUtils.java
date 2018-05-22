@@ -11,7 +11,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.AnimRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.view.View;
@@ -53,7 +52,7 @@ public final class ActivityUtils {
      *
      * @param clz The activity class.
      */
-    public static void startActivity(@NonNull final Class<?> clz) {
+    public static void startActivity(@NonNull final Class<? extends Activity> clz) {
         Context context = Utils.getTopActivityOrApp();
         startActivity(context, null, context.getPackageName(), clz.getName(), null);
     }
@@ -64,8 +63,8 @@ public final class ActivityUtils {
      * @param clz     The activity class.
      * @param options Additional options for how the Activity should be started.
      */
-    public static void startActivity(@NonNull final Class<?> clz,
-                                     @Nullable final Bundle options) {
+    public static void startActivity(@NonNull final Class<? extends Activity> clz,
+                                     final Bundle options) {
         Context context = Utils.getTopActivityOrApp();
         startActivity(context, null, context.getPackageName(), clz.getName(), options);
     }
@@ -79,7 +78,7 @@ public final class ActivityUtils {
      * @param exitAnim  A resource ID of the animation resource to use for the
      *                  outgoing activity.
      */
-    public static void startActivity(@NonNull final Class<?> clz,
+    public static void startActivity(@NonNull final Class<? extends Activity> clz,
                                      @AnimRes final int enterAnim,
                                      @AnimRes final int exitAnim) {
         Context context = Utils.getTopActivityOrApp();
@@ -97,7 +96,7 @@ public final class ActivityUtils {
      * @param clz      The activity class.
      */
     public static void startActivity(@NonNull final Activity activity,
-                                     @NonNull final Class<?> clz) {
+                                     @NonNull final Class<? extends Activity> clz) {
         startActivity(activity, null, activity.getPackageName(), clz.getName(), null);
     }
 
@@ -109,8 +108,8 @@ public final class ActivityUtils {
      * @param options  Additional options for how the Activity should be started.
      */
     public static void startActivity(@NonNull final Activity activity,
-                                     @NonNull final Class<?> clz,
-                                     @Nullable final Bundle options) {
+                                     @NonNull final Class<? extends Activity> clz,
+                                     final Bundle options) {
         startActivity(activity, null, activity.getPackageName(), clz.getName(), options);
     }
 
@@ -123,8 +122,8 @@ public final class ActivityUtils {
      *                       Activity and their associated Views.
      */
     public static void startActivity(@NonNull final Activity activity,
-                                     @NonNull final Class<?> clz,
-                                     @NonNull final View... sharedElements) {
+                                     @NonNull final Class<? extends Activity> clz,
+                                     final View... sharedElements) {
         startActivity(activity, null, activity.getPackageName(), clz.getName(),
                 getOptionsBundle(activity, sharedElements));
     }
@@ -140,7 +139,7 @@ public final class ActivityUtils {
      *                  outgoing activity.
      */
     public static void startActivity(@NonNull final Activity activity,
-                                     @NonNull final Class<?> clz,
+                                     @NonNull final Class<? extends Activity> clz,
                                      @AnimRes final int enterAnim,
                                      @AnimRes final int exitAnim) {
         startActivity(activity, null, activity.getPackageName(), clz.getName(),
@@ -157,7 +156,7 @@ public final class ActivityUtils {
      * @param clz    The activity class.
      */
     public static void startActivity(@NonNull final Bundle extras,
-                                     @NonNull final Class<?> clz) {
+                                     @NonNull final Class<? extends Activity> clz) {
         Context context = Utils.getTopActivityOrApp();
         startActivity(context, extras, context.getPackageName(), clz.getName(), null);
     }
@@ -170,7 +169,7 @@ public final class ActivityUtils {
      * @param options Additional options for how the Activity should be started.
      */
     public static void startActivity(@NonNull final Bundle extras,
-                                     @NonNull final Class<?> clz,
+                                     @NonNull final Class<? extends Activity> clz,
                                      @NonNull final Bundle options) {
         Context context = Utils.getTopActivityOrApp();
         startActivity(context, extras, context.getPackageName(), clz.getName(), options);
@@ -187,7 +186,7 @@ public final class ActivityUtils {
      *                  outgoing activity.
      */
     public static void startActivity(@NonNull final Bundle extras,
-                                     @NonNull final Class<?> clz,
+                                     @NonNull final Class<? extends Activity> clz,
                                      @AnimRes final int enterAnim,
                                      @AnimRes final int exitAnim) {
         Context context = Utils.getTopActivityOrApp();
@@ -207,7 +206,7 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final Bundle extras,
                                      @NonNull final Activity activity,
-                                     @NonNull final Class<?> clz) {
+                                     @NonNull final Class<? extends Activity> clz) {
         startActivity(activity, extras, activity.getPackageName(), clz.getName(), null);
     }
 
@@ -221,7 +220,7 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final Bundle extras,
                                      @NonNull final Activity activity,
-                                     @NonNull final Class<?> clz,
+                                     @NonNull final Class<? extends Activity> clz,
                                      @NonNull final Bundle options) {
         startActivity(activity, extras, activity.getPackageName(), clz.getName(), options);
     }
@@ -237,8 +236,8 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final Bundle extras,
                                      @NonNull final Activity activity,
-                                     @NonNull final Class<?> clz,
-                                     @NonNull final View... sharedElements) {
+                                     @NonNull final Class<? extends Activity> clz,
+                                     final View... sharedElements) {
         startActivity(activity, extras, activity.getPackageName(), clz.getName(),
                 getOptionsBundle(activity, sharedElements));
     }
@@ -256,7 +255,7 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final Bundle extras,
                                      @NonNull final Activity activity,
-                                     @NonNull final Class<?> clz,
+                                     @NonNull final Class<? extends Activity> clz,
                                      @AnimRes final int enterAnim,
                                      @AnimRes final int exitAnim) {
         startActivity(activity, extras, activity.getPackageName(), clz.getName(),
@@ -286,7 +285,7 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final String pkg,
                                      @NonNull final String cls,
-                                     @Nullable final Bundle options) {
+                                     final Bundle options) {
         startActivity(Utils.getTopActivityOrApp(), null, pkg, cls, options);
     }
 
@@ -335,7 +334,7 @@ public final class ActivityUtils {
     public static void startActivity(@NonNull final Activity activity,
                                      @NonNull final String pkg,
                                      @NonNull final String cls,
-                                     @Nullable final Bundle options) {
+                                     final Bundle options) {
         startActivity(activity, null, pkg, cls, options);
     }
 
@@ -351,7 +350,7 @@ public final class ActivityUtils {
     public static void startActivity(@NonNull final Activity activity,
                                      @NonNull final String pkg,
                                      @NonNull final String cls,
-                                     @NonNull final View... sharedElements) {
+                                     final View... sharedElements) {
         startActivity(activity, null, pkg, cls, getOptionsBundle(activity, sharedElements));
     }
 
@@ -401,7 +400,7 @@ public final class ActivityUtils {
     public static void startActivity(@NonNull final Bundle extras,
                                      @NonNull final String pkg,
                                      @NonNull final String cls,
-                                     @NonNull final Bundle options) {
+                                     final Bundle options) {
         startActivity(Utils.getTopActivityOrApp(), extras, pkg, cls, options);
     }
 
@@ -456,7 +455,7 @@ public final class ActivityUtils {
                                      @NonNull final Activity activity,
                                      @NonNull final String pkg,
                                      @NonNull final String cls,
-                                     @NonNull final Bundle options) {
+                                     final Bundle options) {
         startActivity(activity, extras, pkg, cls, options);
     }
 
@@ -474,7 +473,7 @@ public final class ActivityUtils {
                                      @NonNull final Activity activity,
                                      @NonNull final String pkg,
                                      @NonNull final String cls,
-                                     @NonNull final View... sharedElements) {
+                                     final View... sharedElements) {
         startActivity(activity, extras, pkg, cls, getOptionsBundle(activity, sharedElements));
     }
 
@@ -560,7 +559,7 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final Activity activity,
                                      @NonNull final Intent intent,
-                                     @Nullable final Bundle options) {
+                                     final Bundle options) {
         startActivity(intent, activity, options);
     }
 
@@ -574,7 +573,7 @@ public final class ActivityUtils {
      */
     public static void startActivity(@NonNull final Activity activity,
                                      @NonNull final Intent intent,
-                                     @NonNull final View... sharedElements) {
+                                     final View... sharedElements) {
         startActivity(intent, activity, getOptionsBundle(activity, sharedElements));
     }
 
@@ -599,6 +598,321 @@ public final class ActivityUtils {
     }
 
     /**
+     * Start the activity.
+     *
+     * @param activity    The activity.
+     * @param clz         The activity class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode) {
+        startActivityForResult(activity, null, activity.getPackageName(), clz.getName(),
+                requestCode, null);
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param activity    The activity.
+     * @param clz         The activity class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param options     Additional options for how the Activity should be started.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode,
+                                              final Bundle options) {
+        startActivityForResult(activity, null, activity.getPackageName(), clz.getName(),
+                requestCode, options);
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param activity       The activity.
+     * @param clz            The activity class.
+     * @param requestCode    if &gt;= 0, this code will be returned in
+     *                       onActivityResult() when the activity exits.
+     * @param sharedElements The names of the shared elements to transfer to the called
+     *                       Activity and their associated Views.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode,
+                                              final View... sharedElements) {
+        startActivityForResult(activity, null, activity.getPackageName(), clz.getName(),
+                requestCode, getOptionsBundle(activity, sharedElements));
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param activity    The activity.
+     * @param clz         The activity class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param enterAnim   A resource ID of the animation resource to use for the
+     *                    incoming activity.
+     * @param exitAnim    A resource ID of the animation resource to use for the
+     *                    outgoing activity.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode,
+                                              @AnimRes final int enterAnim,
+                                              @AnimRes final int exitAnim) {
+        startActivityForResult(activity, null, activity.getPackageName(), clz.getName(),
+                requestCode, getOptionsBundle(activity, enterAnim, exitAnim));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            activity.overridePendingTransition(enterAnim, exitAnim);
+        }
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param extras      The Bundle of extras to add to this intent.
+     * @param activity    The activity.
+     * @param clz         The activity class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode) {
+        startActivityForResult(activity, extras, activity.getPackageName(), clz.getName(),
+                requestCode, null);
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param extras      The Bundle of extras to add to this intent.
+     * @param activity    The activity.
+     * @param clz         The activity class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param options     Additional options for how the Activity should be started.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode,
+                                              @NonNull final Bundle options) {
+        startActivityForResult(activity, extras, activity.getPackageName(), clz.getName(),
+                requestCode, options);
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param extras         The Bundle of extras to add to this intent.
+     * @param activity       The activity.
+     * @param clz            The activity class.
+     * @param requestCode    if &gt;= 0, this code will be returned in
+     *                       onActivityResult() when the activity exits.
+     * @param sharedElements The names of the shared elements to transfer to the called
+     *                       Activity and their associated Views.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode,
+                                              final View... sharedElements) {
+        startActivityForResult(activity, extras, activity.getPackageName(), clz.getName(),
+                requestCode, getOptionsBundle(activity, sharedElements));
+    }
+
+    /**
+     * Start the activity.
+     *
+     * @param extras      The Bundle of extras to add to this intent.
+     * @param activity    The activity.
+     * @param clz         The activity class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param enterAnim   A resource ID of the animation resource to use for the
+     *                    incoming activity.
+     * @param exitAnim    A resource ID of the animation resource to use for the
+     *                    outgoing activity.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final Class<? extends Activity> clz,
+                                              final int requestCode,
+                                              @AnimRes final int enterAnim,
+                                              @AnimRes final int exitAnim) {
+        startActivityForResult(activity, extras, activity.getPackageName(), clz.getName(),
+                requestCode, getOptionsBundle(activity, enterAnim, exitAnim));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            activity.overridePendingTransition(enterAnim, exitAnim);
+        }
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param activity    The activity.
+     * @param extras      The Bundle of extras to add to this intent.
+     * @param pkg         The name of the package.
+     * @param cls         The name of the class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final String pkg,
+                                              @NonNull final String cls,
+                                              final int requestCode) {
+        startActivityForResult(activity, extras, pkg, cls, requestCode, null);
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param extras      The Bundle of extras to add to this intent.
+     * @param activity    The activity.
+     * @param pkg         The name of the package.
+     * @param cls         The name of the class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param options     Additional options for how the Activity should be started.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final String pkg,
+                                              @NonNull final String cls,
+                                              final int requestCode,
+                                              final Bundle options) {
+        startActivityForResult(activity, extras, pkg, cls, requestCode, options);
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param extras         The Bundle of extras to add to this intent.
+     * @param activity       The activity.
+     * @param pkg            The name of the package.
+     * @param cls            The name of the class.
+     * @param requestCode    if &gt;= 0, this code will be returned in
+     *                       onActivityResult() when the activity exits.
+     * @param sharedElements The names of the shared elements to transfer to the called
+     *                       Activity and their associated Views.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final String pkg,
+                                              @NonNull final String cls,
+                                              final int requestCode,
+                                              final View... sharedElements) {
+        startActivityForResult(activity, extras, pkg, cls,
+                requestCode, getOptionsBundle(activity, sharedElements));
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param extras      The Bundle of extras to add to this intent.
+     * @param pkg         The name of the package.
+     * @param cls         The name of the class.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param enterAnim   A resource ID of the animation resource to use for the
+     *                    incoming activity.
+     * @param exitAnim    A resource ID of the animation resource to use for the
+     *                    outgoing activity.
+     */
+    public static void startActivityForResult(@NonNull final Bundle extras,
+                                              @NonNull final Activity activity,
+                                              @NonNull final String pkg,
+                                              @NonNull final String cls,
+                                              final int requestCode,
+                                              @AnimRes final int enterAnim,
+                                              @AnimRes final int exitAnim) {
+        startActivityForResult(activity, extras, pkg, cls,
+                requestCode, getOptionsBundle(activity, enterAnim, exitAnim));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            activity.overridePendingTransition(enterAnim, exitAnim);
+        }
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param activity    The activity.
+     * @param intent      The description of the activity to start.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Intent intent,
+                                              final int requestCode) {
+        startActivityForResult(intent, activity, requestCode, null);
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param activity    The activity.
+     * @param intent      The description of the activity to start.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param options     Additional options for how the Activity should be started.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Intent intent,
+                                              final int requestCode,
+                                              final Bundle options) {
+        startActivityForResult(intent, activity, requestCode, options);
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param activity       The activity.
+     * @param intent         The description of the activity to start.
+     * @param requestCode    if &gt;= 0, this code will be returned in
+     *                       onActivityResult() when the activity exits.
+     * @param sharedElements The names of the shared elements to transfer to the called
+     *                       Activity and their associated Views.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Intent intent,
+                                              final int requestCode,
+                                              final View... sharedElements) {
+        startActivityForResult(intent, activity,
+                requestCode, getOptionsBundle(activity, sharedElements));
+    }
+
+    /**
+     * Start the activity for result.
+     *
+     * @param activity    The activity.
+     * @param intent      The description of the activity to start.
+     * @param requestCode if &gt;= 0, this code will be returned in
+     *                    onActivityResult() when the activity exits.
+     * @param enterAnim   A resource ID of the animation resource to use for the
+     *                    incoming activity.
+     * @param exitAnim    A resource ID of the animation resource to use for the
+     *                    outgoing activity.
+     */
+    public static void startActivityForResult(@NonNull final Activity activity,
+                                              @NonNull final Intent intent,
+                                              final int requestCode,
+                                              @AnimRes final int enterAnim,
+                                              @AnimRes final int exitAnim) {
+        startActivityForResult(intent, activity,
+                requestCode, getOptionsBundle(activity, enterAnim, exitAnim));
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            activity.overridePendingTransition(enterAnim, exitAnim);
+        }
+    }
+
+    /**
      * Start activities.
      *
      * @param intents The descriptions of the activities to start.
@@ -614,7 +928,7 @@ public final class ActivityUtils {
      * @param options Additional options for how the Activity should be started.
      */
     public static void startActivities(@NonNull final Intent[] intents,
-                                       @Nullable final Bundle options) {
+                                       final Bundle options) {
         startActivities(intents, Utils.getTopActivityOrApp(), options);
     }
 
@@ -657,7 +971,7 @@ public final class ActivityUtils {
      */
     public static void startActivities(@NonNull final Activity activity,
                                        @NonNull final Intent[] intents,
-                                       @Nullable final Bundle options) {
+                                       final Bundle options) {
         startActivities(intents, activity, options);
     }
 
@@ -759,7 +1073,7 @@ public final class ActivityUtils {
      * @param clz The activity class.
      * @return {@code true}: yes<br>{@code false}: no
      */
-    public static boolean isActivityExistsInStack(@NonNull final Class<?> clz) {
+    public static boolean isActivityExistsInStack(@NonNull final Class<? extends Activity> clz) {
         List<Activity> activities = Utils.getActivityList();
         for (Activity aActivity : activities) {
             if (aActivity.getClass().equals(clz)) {
@@ -812,7 +1126,7 @@ public final class ActivityUtils {
      *
      * @param clz The activity class.
      */
-    public static void finishActivity(@NonNull final Class<?> clz) {
+    public static void finishActivity(@NonNull final Class<? extends Activity> clz) {
         finishActivity(clz, false);
     }
 
@@ -822,7 +1136,8 @@ public final class ActivityUtils {
      * @param clz        The activity class.
      * @param isLoadAnim True to use animation for the outgoing activity, false otherwise.
      */
-    public static void finishActivity(@NonNull final Class<?> clz, final boolean isLoadAnim) {
+    public static void finishActivity(@NonNull final Class<? extends Activity> clz,
+                                      final boolean isLoadAnim) {
         List<Activity> activities = Utils.getActivityList();
         for (Activity activity : activities) {
             if (activity.getClass().equals(clz)) {
@@ -843,7 +1158,7 @@ public final class ActivityUtils {
      * @param exitAnim  A resource ID of the animation resource to use for the
      *                  outgoing activity.
      */
-    public static void finishActivity(@NonNull final Class<?> clz,
+    public static void finishActivity(@NonNull final Class<? extends Activity> clz,
                                       @AnimRes final int enterAnim,
                                       @AnimRes final int exitAnim) {
         List<Activity> activities = Utils.getActivityList();
@@ -924,7 +1239,7 @@ public final class ActivityUtils {
      * @param clz           The activity class.
      * @param isIncludeSelf True to include the activity, false otherwise.
      */
-    public static boolean finishToActivity(@NonNull final Class<?> clz,
+    public static boolean finishToActivity(@NonNull final Class<? extends Activity> clz,
                                            final boolean isIncludeSelf) {
         return finishToActivity(clz, isIncludeSelf, false);
     }
@@ -936,7 +1251,7 @@ public final class ActivityUtils {
      * @param isIncludeSelf True to include the activity, false otherwise.
      * @param isLoadAnim    True to use animation for the outgoing activity, false otherwise.
      */
-    public static boolean finishToActivity(@NonNull final Class<?> clz,
+    public static boolean finishToActivity(@NonNull final Class<? extends Activity> clz,
                                            final boolean isIncludeSelf,
                                            final boolean isLoadAnim) {
         List<Activity> activities = Utils.getActivityList();
@@ -963,7 +1278,7 @@ public final class ActivityUtils {
      * @param exitAnim      A resource ID of the animation resource to use for the
      *                      outgoing activity.
      */
-    public static boolean finishToActivity(@NonNull final Class<?> clz,
+    public static boolean finishToActivity(@NonNull final Class<? extends Activity> clz,
                                            final boolean isIncludeSelf,
                                            @AnimRes final int enterAnim,
                                            @AnimRes final int exitAnim) {
@@ -986,7 +1301,7 @@ public final class ActivityUtils {
      *
      * @param clz The activity class.
      */
-    public static void finishOtherActivities(@NonNull final Class<?> clz) {
+    public static void finishOtherActivities(@NonNull final Class<? extends Activity> clz) {
         finishOtherActivities(clz, false);
     }
 
@@ -997,7 +1312,7 @@ public final class ActivityUtils {
      * @param clz        The activity class.
      * @param isLoadAnim True to use animation for the outgoing activity, false otherwise.
      */
-    public static void finishOtherActivities(@NonNull final Class<?> clz,
+    public static void finishOtherActivities(@NonNull final Class<? extends Activity> clz,
                                              final boolean isLoadAnim) {
         List<Activity> activities = Utils.getActivityList();
         for (int i = activities.size() - 1; i >= 0; i--) {
@@ -1017,7 +1332,7 @@ public final class ActivityUtils {
      * @param exitAnim  A resource ID of the animation resource to use for the
      *                  outgoing activity.
      */
-    public static void finishOtherActivities(@NonNull final Class<?> clz,
+    public static void finishOtherActivities(@NonNull final Class<? extends Activity> clz,
                                              @AnimRes final int enterAnim,
                                              @AnimRes final int exitAnim) {
         List<Activity> activities = Utils.getActivityList();
@@ -1110,10 +1425,20 @@ public final class ActivityUtils {
     /**
      * Return the icon of activity.
      *
+     * @param activity The activity.
+     * @return the icon of activity
+     */
+    public static Drawable getActivityIcon(@NonNull final Activity activity) {
+        return getActivityIcon(activity.getComponentName());
+    }
+
+    /**
+     * Return the icon of activity.
+     *
      * @param clz The activity class.
      * @return the icon of activity
      */
-    public static Drawable getActivityIcon(final Class<?> clz) {
+    public static Drawable getActivityIcon(@NonNull final Class<? extends Activity> clz) {
         return getActivityIcon(new ComponentName(Utils.getApp(), clz));
     }
 
@@ -1123,7 +1448,7 @@ public final class ActivityUtils {
      * @param activityName The name of activity.
      * @return the icon of activity
      */
-    public static Drawable getActivityIcon(final ComponentName activityName) {
+    public static Drawable getActivityIcon(@NonNull final ComponentName activityName) {
         PackageManager pm = Utils.getApp().getPackageManager();
         try {
             return pm.getActivityIcon(activityName);
@@ -1136,10 +1461,20 @@ public final class ActivityUtils {
     /**
      * Return the logo of activity.
      *
+     * @param activity The activity.
+     * @return the logo of activity
+     */
+    public static Drawable getActivityLogo(@NonNull final Activity activity) {
+        return getActivityLogo(activity.getComponentName());
+    }
+
+    /**
+     * Return the logo of activity.
+     *
      * @param clz The activity class.
      * @return the logo of activity
      */
-    public static Drawable getActivityLogo(final Class<?> clz) {
+    public static Drawable getActivityLogo(@NonNull final Class<? extends Activity> clz) {
         return getActivityLogo(new ComponentName(Utils.getApp(), clz));
     }
 
@@ -1149,7 +1484,7 @@ public final class ActivityUtils {
      * @param activityName The name of activity.
      * @return the logo of activity
      */
-    public static Drawable getActivityLogo(final ComponentName activityName) {
+    public static Drawable getActivityLogo(@NonNull final ComponentName activityName) {
         PackageManager pm = Utils.getApp().getPackageManager();
         try {
             return pm.getActivityLogo(activityName);
@@ -1158,29 +1493,6 @@ public final class ActivityUtils {
             return null;
         }
     }
-
-//    private static Context getTopActivityOrApp() {
-//        if (isAppForeground()) {
-//            Activity topActivity = getTopActivity();
-//            return topActivity == null ? Utils.getApp() : topActivity;
-//        } else {
-//            return Utils.getApp();
-//        }
-//    }
-//
-//    private static boolean isAppForeground() {
-//        ActivityManager am =
-//                (ActivityManager) Utils.getApp().getSystemService(Context.ACTIVITY_SERVICE);
-//        if (am == null) return false;
-//        List<ActivityManager.RunningAppProcessInfo> info = am.getRunningAppProcesses();
-//        if (info == null || info.size() == 0) return false;
-//        for (ActivityManager.RunningAppProcessInfo aInfo : info) {
-//            if (aInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-//                return aInfo.processName.equals(Utils.getApp().getPackageName());
-//            }
-//        }
-//        return false;
-//    }
 
     private static void startActivity(final Context context,
                                       final Bundle extras,
@@ -1203,6 +1515,29 @@ public final class ActivityUtils {
             context.startActivity(intent, options);
         } else {
             context.startActivity(intent);
+        }
+    }
+
+    private static void startActivityForResult(final Activity activity,
+                                               final Bundle extras,
+                                               final String pkg,
+                                               final String cls,
+                                               final int requestCode,
+                                               final Bundle options) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (extras != null) intent.putExtras(extras);
+        intent.setComponent(new ComponentName(pkg, cls));
+        startActivityForResult(intent, activity, requestCode, options);
+    }
+
+    private static void startActivityForResult(final Intent intent,
+                                               final Activity activity,
+                                               final int requestCode,
+                                               final Bundle options) {
+        if (options != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            activity.startActivityForResult(intent, requestCode, options);
+        } else {
+            activity.startActivityForResult(intent, requestCode);
         }
     }
 
@@ -1229,15 +1564,15 @@ public final class ActivityUtils {
 
     private static Bundle getOptionsBundle(final Activity activity,
                                            final View[] sharedElements) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int len = sharedElements.length;
-            @SuppressWarnings("unchecked")
-            Pair<View, String>[] pairs = new Pair[len];
-            for (int i = 0; i < len; i++) {
-                pairs[i] = Pair.create(sharedElements[i], sharedElements[i].getTransitionName());
-            }
-            return ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs).toBundle();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) return null;
+        if (sharedElements == null) return null;
+        int len = sharedElements.length;
+        if (len <= 0) return null;
+        @SuppressWarnings("unchecked")
+        Pair<View, String>[] pairs = new Pair[len];
+        for (int i = 0; i < len; i++) {
+            pairs[i] = Pair.create(sharedElements[i], sharedElements[i].getTransitionName());
         }
-        return ActivityOptionsCompat.makeSceneTransitionAnimation(activity, null, null).toBundle();
+        return ActivityOptionsCompat.makeSceneTransitionAnimation(activity, pairs).toBundle();
     }
 }

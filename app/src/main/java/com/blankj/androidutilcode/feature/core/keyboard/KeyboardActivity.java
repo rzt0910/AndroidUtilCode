@@ -3,7 +3,7 @@ package com.blankj.androidutilcode.feature.core.keyboard;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +15,7 @@ import com.blankj.androidutilcode.R;
 import com.blankj.androidutilcode.base.BaseBackActivity;
 import com.blankj.androidutilcode.helper.DialogHelper;
 import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.blankj.utilcode.util.SpanUtils;
 
 /**
@@ -22,7 +23,7 @@ import com.blankj.utilcode.util.SpanUtils;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/09/27
- *     desc  : Keyboard 工具类 Demo
+ *     desc  : demo about KeyboardUtils
  * </pre>
  */
 public class KeyboardActivity extends BaseBackActivity {
@@ -37,7 +38,7 @@ public class KeyboardActivity extends BaseBackActivity {
     private AlertDialog dialog;
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
@@ -49,7 +50,7 @@ public class KeyboardActivity extends BaseBackActivity {
     @Override
     public void initView(Bundle savedInstanceState, View contentView) {
         getToolBar().setTitle(getString(R.string.demo_keyboard));
-
+        ScreenUtils.setFullScreen(this);
         etInput = findViewById(R.id.et_input);
         findViewById(R.id.btn_hide_soft_input).setOnClickListener(this);
         findViewById(R.id.btn_show_soft_input).setOnClickListener(this);
@@ -121,5 +122,11 @@ public class KeyboardActivity extends BaseBackActivity {
                     && event.getY() > top && event.getY() < bottom);
         }
         return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        KeyboardUtils.unregisterSoftInputChangedListener(this);
+        super.onDestroy();
     }
 }

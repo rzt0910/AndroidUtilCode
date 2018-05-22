@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.blankj.androidutilcode.R;
@@ -16,7 +16,7 @@ import com.blankj.utilcode.util.BarUtils;
  *     author: Blankj
  *     blog  : http://blankj.com
  *     time  : 2016/10/13
- *     desc  : Activity 工具类 Demo
+ *     desc  : demo about BarUtils
  * </pre>
  */
 public class BarNotificationActivity extends BaseBackActivity {
@@ -29,7 +29,7 @@ public class BarNotificationActivity extends BaseBackActivity {
     }
 
     @Override
-    public void initData(@NonNull Bundle bundle) {
+    public void initData(@Nullable Bundle bundle) {
 
     }
 
